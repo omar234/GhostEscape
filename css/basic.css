@@ -1,0 +1,7 @@
+.boardCell {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    background-color: green;
+    display: inline-block;
+}
