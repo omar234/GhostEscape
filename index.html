@@ -7,6 +7,8 @@
     <script type="text/javascript" src="js/Board.js"></script>
     <script type="text/javascript" src="js/Game.js"></script>
     <script type="text/javascript" src="js/Character.js"></script>
+    <script type="text/javascript" src="js/Ghost.js"></script>
+    <script type="text/javascript" src="js/Human.js"></script>
     <link rel="stylesheet" href="css/basic.css" type="text/css">
 </head>
 <body>
@@ -15,5 +17,8 @@
 <script type="text/javascript">
     var game = new Game();
     game.drawBoard();
+    game.newPlayer();
+    var hola = Board.getInstance();
+    hola.generateRandomObstacles(4);
 </script>
 </html>

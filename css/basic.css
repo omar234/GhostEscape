@@ -5,3 +5,15 @@
     background-color: green;
     display: inline-block;
 }
+
+#gameBoard {
+    margin: 0 auto;
+}
+
+.obstacle {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    background-color: blue;
+    display: inline-block;
+}
