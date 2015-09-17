@@ -12,5 +12,13 @@ function Character(x , y){
     Character.prototype.getCurrentY = function(){
         return this.currentY
     };
+
+    Character.prototype.setCurrentX = function (newX) {
+        this.currentX = newX;
+    };
+
+    Character.prototype.setCurrentY = function (newY) {
+        this.currentY = newY;
+    }
 }
 

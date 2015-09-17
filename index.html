@@ -15,9 +15,10 @@
     <div id="gameBoard"></div>
 </body>
 <script type="text/javascript">
-    var game = new Game();
+    var game = Game.getInstance();
     game.drawBoard();
     game.newPlayer();
+    game.startGame();
     var hola = Board.getInstance();
     hola.generateRandomObstacles(4);
 </script>

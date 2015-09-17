@@ -3,26 +3,7 @@
  */
 function Ghost(x , y){
     Character.call(this, x , y);
-    initializeKeyEvents();
-    removeKeyEvents();
-
-    function initializeKeyEvents(){
-        $(window).on('keydown', function (event) {
-            if(event.keyCode == 38){ //up arrow
-
-            } else if(event.keyCode == 40){ //down arrow
-
-            } else if(event.keyCode == 37){ // left arrow
-
-            } else if(event.keyCode == 39){ // right arrow
-
-            }
-        });
-    }
-
-    function removeKeyEvents(){
-        $(window).off('keydown')
-    }
+    this.type = 'ghost';
 }
 
 Ghost.prototype = new Character();
