@@ -19,6 +19,17 @@ var Board = (function(){
             MAX_Y = value
         }
 
+        function checkFreeCells(){
+            for(var i = 0 ; i < MAX_X ; i++){
+                for(var j = 0 ; j < MAX_Y ; j++){
+                    if(board[i][j] == 0){
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+
         return {
             //Public stuff
             getMAX_X : function () {
@@ -68,13 +79,46 @@ var Board = (function(){
                     randomX = Math.round(Math.random() * 9);
                     randomY = Math.round(Math.random() * 9);
                     if(board[randomX][randomY] === 0){
-                        console.log(randomX, randomY);
                         this.changeCellType(randomX + 1, randomY + 1, 'obstacle');
                         board[randomX][randomY] = 1;
                         cont++;
                     }
                 }
 
+            },
+
+            generateRandomCoin : function(){
+                var randomX;
+                var randomY;
+
+                while(true){
+                    randomX = Math.round(Math.random() * 9);
+                    randomY = Math.round(Math.random() * 9);
+                    if(board[randomX][randomY] === 0){
+                        console.log(randomX, randomY);
+                        this.changeCellType(randomX + 1, randomY + 1, 'coin');
+                        board[randomX][randomY] = 4;
+                        break;
+                    } else {
+                        if(!checkFreeCells())
+                            break
+                    }
+                }
+            },
+
+            generateRandomChest : function(){
+                var randomX;
+                var randomY;
+
+                while(true){
+                    randomX = Math.round(Math.random() * 9);
+                    randomY = Math.round(Math.random() * 9);
+                    if(board[randomX][randomY] === 0){
+                        this.changeCellType(randomX + 1, randomY + 1, 'chest');
+                        board[randomX][randomY] = 5;
+                        break;
+                    }
+                }
             }
         }
     }

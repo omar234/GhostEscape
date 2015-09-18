@@ -11,21 +11,34 @@ var Game = (function(){
         var logicBoard = board.getLogicArray();
         var ghost;
         var humans = [];
+        var coinSpawn;
 
         //change the board logical matrix, and call @drawCharacter
         function moveCharacter(character, targetX, targetY){
             if(character instanceof Ghost){
                 var currentX = character.getCurrentX() - 1;
                 var currentY = character.getCurrentY() - 1;
-                console.log(targetX, targetY, character);
+
                 if (logicBoard[targetX - 1][targetY - 1] == 0){
                     logicBoard[currentX][currentY] = 0;
                     logicBoard[targetX - 1][targetY - 1] = 3;
                     drawCharacter(character, targetX, targetY)
+                } else if(logicBoard[targetX - 1][targetY - 1] == 4){
+                    logicBoard[currentX][currentY] = 0;
+                    logicBoard[targetX - 1][targetY - 1] = 3;
+                    drawCharacter(character, targetX, targetY);
+                    updateCounter();
                 }
+
+
             } else if(character instanceof Human){
 
             }
+        }
+
+        function updateCounter(){
+            var counter = $('.coinCounter');
+            counter.text(parseInt(counter.text()) + 1);
         }
 
         // moves graphically the character and sets its current x and y
@@ -62,26 +75,48 @@ var Game = (function(){
         }
 
         function initializeKeyEvents(){
+            var keyInterval;
+            var MOVE_SPEED = 250;
             $(window).on('keydown', function (event) {
-
+                clearInterval(keyInterval);
                 if(event.keyCode == 38){ //up arrow
-                    if(isValidMovement(ghost.getCurrentX() - 1, ghost.getCurrentY()))
-                        moveCharacter(ghost, ghost.getCurrentX() - 1, ghost.getCurrentY())
+                    keyInterval = setInterval(
+                        function(){
+                            if(isValidMovement(ghost.getCurrentX() - 1, ghost.getCurrentY()))
+                                moveCharacter(ghost, ghost.getCurrentX() - 1, ghost.getCurrentY())
+                        },MOVE_SPEED);
                 } else if(event.keyCode == 40){ //down arrow
-                    if(isValidMovement(ghost.getCurrentX() + 1, ghost.getCurrentY()))
-                        moveCharacter(ghost, ghost.getCurrentX() + 1, ghost.getCurrentY())
+                    keyInterval = setInterval(
+                        function(){
+                            if(isValidMovement(ghost.getCurrentX() + 1, ghost.getCurrentY()))
+                                moveCharacter(ghost, ghost.getCurrentX() + 1, ghost.getCurrentY())
+                        },MOVE_SPEED);
                 } else if(event.keyCode == 37){ // left arrow
-                    if(isValidMovement(ghost.getCurrentX(), ghost.getCurrentY() -1))
-                        moveCharacter(ghost, ghost.getCurrentX(), ghost.getCurrentY() -1)
+                    keyInterval = setInterval(
+                        function(){
+                            if(isValidMovement(ghost.getCurrentX(), ghost.getCurrentY() -1))
+                                moveCharacter(ghost, ghost.getCurrentX(), ghost.getCurrentY() -1)
+                        },MOVE_SPEED);
                 } else if(event.keyCode == 39){ // right arrow
-                    if(isValidMovement(ghost.getCurrentX(), ghost.getCurrentY() + 1))
-                        moveCharacter(ghost, ghost.getCurrentX(), ghost.getCurrentY() + 1)
+                    keyInterval = setInterval(
+                        function(){
+                            if(isValidMovement(ghost.getCurrentX(), ghost.getCurrentY() + 1))
+                                moveCharacter(ghost, ghost.getCurrentX(), ghost.getCurrentY() + 1)
+                    },MOVE_SPEED);
                 }
             });
         }
 
         function removeKeyEvents(){
             $(window).off('keydown')
+        }
+
+        function startSpawnCoins(){
+            coinSpawn = setInterval(function(){board.generateRandomCoin()}, 1200);
+        }
+
+        function stopSpawnCoins(){
+            clearInterval(coinSpawn)
         }
 
         return {
@@ -93,12 +128,18 @@ var Game = (function(){
             newPlayer: function (name) {
                 createCharacter('ghost');
                 createCharacter('human');
-                //console.log(ghost.getCurrentX());
-                //console.log(humans[0].getCurrentX())
+
             },
 
             startGame : function(){
                 initializeKeyEvents();
+                startSpawnCoins();
+                board.generateRandomChest();
+            },
+
+            finishGame : function () {
+                removeKeyEvents();
+                stopSpawnCoins();
             }
 
         }

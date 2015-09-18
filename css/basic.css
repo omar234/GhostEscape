@@ -42,3 +42,19 @@
     background-color: lightgreen;
     display: inline-block;
 }
+
+.coin {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    background-color: gold;
+    display: inline-block;
+}
+
+.chest {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    background-color: brown;
+    display: inline-block;
+}
