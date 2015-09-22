@@ -55,8 +55,6 @@ var Board = (function(){
                     board.push(row);
                     row = [];
                 }
-                console.log(board)
-
             },
 
             getLogicArray : function () {
@@ -95,7 +93,7 @@ var Board = (function(){
                     randomX = Math.round(Math.random() * 9);
                     randomY = Math.round(Math.random() * 9);
                     if(board[randomX][randomY] === 0){
-                        console.log(randomX, randomY);
+
                         this.changeCellType(randomX + 1, randomY + 1, 'coin');
                         board[randomX][randomY] = 4;
                         break;

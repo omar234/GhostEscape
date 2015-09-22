@@ -11,34 +11,73 @@ var Game = (function(){
         var logicBoard = board.getLogicArray();
         var ghost;
         var humans = [];
-        var coinSpawn;
+        var coinSpawnInterval;
+        var humansInterval = [];
 
         //change the board logical matrix, and call @drawCharacter
         function moveCharacter(character, targetX, targetY){
+            var currentX;
+            var currentY;
             if(character instanceof Ghost){
-                var currentX = character.getCurrentX() - 1;
-                var currentY = character.getCurrentY() - 1;
+                currentX = character.getCurrentX() - 1;
+                currentY = character.getCurrentY() - 1;
 
                 if (logicBoard[targetX - 1][targetY - 1] == 0){
                     logicBoard[currentX][currentY] = 0;
-                    logicBoard[targetX - 1][targetY - 1] = 3;
+                    logicBoard[targetX - 1][targetY - 1] = 2;
                     drawCharacter(character, targetX, targetY)
                 } else if(logicBoard[targetX - 1][targetY - 1] == 4){
                     logicBoard[currentX][currentY] = 0;
-                    logicBoard[targetX - 1][targetY - 1] = 3;
+                    logicBoard[targetX - 1][targetY - 1] = 2;
                     drawCharacter(character, targetX, targetY);
                     updateCounter();
+                } else if(logicBoard[targetX - 1][targetY - 1] == 5) {
+                    turnInCoins();
                 }
-
-
             } else if(character instanceof Human){
+                var nextMove = character.chaseGhost(ghost,board);
+                if(nextMove.targetX != -1 && nextMove.targetY != -1){
+                    currentX = character.getCurrentX() - 1;
+                    currentY = character.getCurrentY() - 1;
 
+                    if(nextMove.targetX == ghost.getCurrentX() - 1 && nextMove.targetY == ghost.getCurrentY() - 1){
+                        finishGame();
+                        alert('Game Over');
+                        return
+                    }
+
+                    logicBoard[currentX][currentY] = 0;
+                    logicBoard[nextMove.targetX][nextMove.targetY] = 3;
+
+                    drawCharacter(character, nextMove.targetX + 1, nextMove.targetY + 1);
+                }
             }
+        }
+
+        function finishGame() {
+            removeKeyEvents();
+            stopSpawnCoins();
+            stopAIHuman();
         }
 
         function updateCounter(){
             var counter = $('.coinCounter');
             counter.text(parseInt(counter.text()) + 1);
+        }
+
+        function turnInCoins(){
+            var coins = $('.coinCounter');
+            var coinNumber = parseInt(coins.text());
+            var globalCounter = $('#globalCounter');
+            var totalCoints = parseInt(globalCounter.text()) + coinNumber;
+            if(totalCoints >= 50){
+                finishGame();
+                alert('You win!');
+                return
+            }
+            globalCounter.text(totalCoints);
+            coins.text('0')
+
         }
 
         // moves graphically the character and sets its current x and y
@@ -61,9 +100,9 @@ var Game = (function(){
                 drawCharacter(ghost, 4, 4);
                 logicBoard[4 - 1][4 - 1] = 2
             } else if(type == 'human'){
-                humans.push(new Human(5,5));
-                drawCharacter(humans[0], 5, 5);
-                logicBoard[5 - 1][5 - 1] = 3;
+                humans.push(new Human(8,8));
+                drawCharacter(humans[0], 8, 8);
+                logicBoard[8 - 1][8 - 1] = 3;
             }
         }
 
@@ -112,11 +151,30 @@ var Game = (function(){
         }
 
         function startSpawnCoins(){
-            coinSpawn = setInterval(function(){board.generateRandomCoin()}, 1200);
+            coinSpawnInterval = setInterval(function(){board.generateRandomCoin()}, 1200);
         }
 
         function stopSpawnCoins(){
-            clearInterval(coinSpawn)
+            clearInterval(coinSpawnInterval)
+        }
+
+        function startAIHuman(){
+            var humanInterval;
+
+            humans.forEach(function (human) {
+                humanInterval = setInterval(function(){
+                    moveCharacter(human);
+                }, 1500);
+                humansInterval.push(humanInterval);
+            });
+
+        }
+
+        function stopAIHuman(){
+            var i;
+            for(i = 0 ; i < humansInterval.length ; i++){
+                clearInterval(humansInterval[i]);
+            }
         }
 
         return {
@@ -135,13 +193,8 @@ var Game = (function(){
                 initializeKeyEvents();
                 startSpawnCoins();
                 board.generateRandomChest();
-            },
-
-            finishGame : function () {
-                removeKeyEvents();
-                stopSpawnCoins();
+                startAIHuman();
             }
-
         }
     }
 
