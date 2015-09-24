@@ -117,6 +117,19 @@ var Board = (function(){
                         break;
                     }
                 }
+            },
+
+            generateRandomFreePoint : function(){
+                var randomX;
+                var randomY;
+
+                while(true){
+                    randomX = Math.round(Math.random() * 9);
+                    randomY = Math.round(Math.random() * 9);
+                    if(board[randomX][randomY] === 0){
+                        return {x : randomX, y : randomY}
+                    }
+                }
             }
         }
     }

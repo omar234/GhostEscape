@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Ghost Escape</title>
+
+    <link rel="stylesheet" href="css/basic.css" type="text/css">
+</head>
+<body>
+    <div class="infoCoin">
+        <label>Chest Coin Count:</label><span id="globalCounter">0</span>
+    </div>
+    <div id="gameBoard"></div>
+    <div class="infoCoin">
+        <label>Current Coin:</label><span class="coinCounter">0</span>
+    </div>
+
     <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
     <script type="text/javascript" src="js/Board.js"></script>
     <script type="text/javascript" src="js/Game.js"></script>
     <script type="text/javascript" src="js/Character.js"></script>
     <script type="text/javascript" src="js/Ghost.js"></script>
     <script type="text/javascript" src="js/Human.js"></script>
-    <link rel="stylesheet" href="css/basic.css" type="text/css">
-</head>
-<body>
-    <span id="globalCounter">0</span>
-    <div id="gameBoard"></div>
-    <span class="coinCounter">0</span>
+    <script type="text/javascript" src="js/init.js"></script>
 </body>
-<script type="text/javascript">
-    var game = Game.getInstance();
-    game.drawBoard();
-    game.newPlayer();
-    game.startGame();
-    var hola = Board.getInstance();
-    hola.generateRandomObstacles(4);
-</script>
 </html>

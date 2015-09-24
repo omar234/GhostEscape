@@ -16,7 +16,7 @@ function Human(x, y){
 
         function isValidMovement(x, y){
             if( x <= 0 || y <= 0 || x > board.getMAX_X() || y > board.getMAX_Y()
-                || logicBoard[x][y] == 1 || logicBoard[x][y] == 3 || logicBoard[x][y] == 5 || logicBoard[x][y] == 4){
+                || logicBoard[x][y] == 1 || logicBoard[x][y] == 3 || logicBoard[x][y] == 5 ){
                 return false
             }
             return true

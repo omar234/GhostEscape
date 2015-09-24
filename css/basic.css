@@ -3,6 +3,7 @@
     height: 30px;
     margin: 2px;
     background-color: green;
+    background-size: contain;
     display: inline-block;
 }
 
@@ -10,7 +11,9 @@
     width: 30px;
     height: 30px;
     margin: 2px;
-    background-color: gray;
+    background-image: url("../images/ghost.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
     display: inline-block;
 }
 
@@ -23,7 +26,9 @@
     width: 30px;
     height: 30px;
     margin: 2px;
-    background-color: blue;
+    background-image: url("../images/rock.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
     display: inline-block;
 }
 
@@ -31,7 +36,9 @@
     width: 30px;
     height: 30px;
     margin: 2px;
-    background-color: black;
+    background-image: url("../images/human.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
     display: inline-block;
 }
 
@@ -39,7 +46,9 @@
     width: 30px;
     height: 30px;
     margin: 2px;
-    background-color: lightgreen;
+    background-image: url("../images/grass.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
     display: inline-block;
 }
 
@@ -47,7 +56,9 @@
     width: 30px;
     height: 30px;
     margin: 2px;
-    background-color: gold;
+    background-image: url("../images/coin.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
     display: inline-block;
 }
 
@@ -55,6 +66,17 @@
     width: 30px;
     height: 30px;
     margin: 2px;
-    background-color: brown;
+    background-image: url("../images/chest.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
     display: inline-block;
+}
+
+.infoCoin{
+    height: 50px;
+    width: 150px;
+    text-align: left;
+    left: 150px;
+    padding: 15px 3px 0 15px;
+    margin-left: 50px;
 }

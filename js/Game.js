@@ -95,14 +95,19 @@ var Game = (function(){
         }
 
         function createCharacter(type) {
+            var coordinates;
             if(type == 'ghost'){
-                ghost = new Ghost(4,4);
-                drawCharacter(ghost, 4, 4);
-                logicBoard[4 - 1][4 - 1] = 2
+                coordinates = board.generateRandomFreePoint();
+                ghost = new Ghost(coordinates.x + 1, coordinates.y + 1);
+                drawCharacter(ghost, coordinates.x + 1, coordinates.y + 1);
+                logicBoard[coordinates.x][coordinates.y] = 2
             } else if(type == 'human'){
-                humans.push(new Human(8,8));
-                drawCharacter(humans[0], 8, 8);
-                logicBoard[8 - 1][8 - 1] = 3;
+                coordinates = board.generateRandomFreePoint();
+                var humanLenght;
+                humans.push(new Human(coordinates.x + 1 ,coordinates.y + 1));
+                humanLenght = humans.length;
+                drawCharacter(humans[humanLenght - 1], coordinates.x + 1, coordinates.y + 1);
+                logicBoard[coordinates.x][coordinates.y] = 3;
             }
         }
 
@@ -181,10 +186,12 @@ var Game = (function(){
             //Public stuff
             drawBoard : function(){
                 board.createBoard(10,10);
+                board.generateRandomObstacles(10)
             },
 
             newPlayer: function (name) {
                 createCharacter('ghost');
+                createCharacter('human');
                 createCharacter('human');
 
             },
