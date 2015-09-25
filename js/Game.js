@@ -13,6 +13,7 @@ var Game = (function(){
         var humans = [];
         var coinSpawnInterval;
         var humansInterval = [];
+        var ghostKeyInterval;
 
         //change the board logical matrix, and call @drawCharacter
         function moveCharacter(character, targetX, targetY){
@@ -119,30 +120,29 @@ var Game = (function(){
         }
 
         function initializeKeyEvents(){
-            var keyInterval;
             var MOVE_SPEED = 250;
             $(window).on('keydown', function (event) {
-                clearInterval(keyInterval);
+                clearInterval(ghostKeyInterval);
                 if(event.keyCode == 38){ //up arrow
-                    keyInterval = setInterval(
+                    ghostKeyInterval = setInterval(
                         function(){
                             if(isValidMovement(ghost.getCurrentX() - 1, ghost.getCurrentY()))
                                 moveCharacter(ghost, ghost.getCurrentX() - 1, ghost.getCurrentY())
                         },MOVE_SPEED);
                 } else if(event.keyCode == 40){ //down arrow
-                    keyInterval = setInterval(
+                    ghostKeyInterval = setInterval(
                         function(){
                             if(isValidMovement(ghost.getCurrentX() + 1, ghost.getCurrentY()))
                                 moveCharacter(ghost, ghost.getCurrentX() + 1, ghost.getCurrentY())
                         },MOVE_SPEED);
                 } else if(event.keyCode == 37){ // left arrow
-                    keyInterval = setInterval(
+                    ghostKeyInterval = setInterval(
                         function(){
                             if(isValidMovement(ghost.getCurrentX(), ghost.getCurrentY() -1))
                                 moveCharacter(ghost, ghost.getCurrentX(), ghost.getCurrentY() -1)
                         },MOVE_SPEED);
                 } else if(event.keyCode == 39){ // right arrow
-                    keyInterval = setInterval(
+                    ghostKeyInterval = setInterval(
                         function(){
                             if(isValidMovement(ghost.getCurrentX(), ghost.getCurrentY() + 1))
                                 moveCharacter(ghost, ghost.getCurrentX(), ghost.getCurrentY() + 1)
@@ -152,7 +152,8 @@ var Game = (function(){
         }
 
         function removeKeyEvents(){
-            $(window).off('keydown')
+            $(window).off('keydown');
+            clearInterval(ghostKeyInterval)
         }
 
         function startSpawnCoins(){

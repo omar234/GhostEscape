@@ -41,7 +41,12 @@ function Human(x, y){
             targetX = currentX;
         if(targetY == -1 && targetX != -1)
             targetY = currentY;
-        //console.log('chase',targetX, targetY);
+
+        if(!isValidMovement(targetX, targetY)){
+            targetX = -1;
+            targetY = -1;
+        }
+
         return {targetX : targetX, targetY: targetY}
     }
 }
